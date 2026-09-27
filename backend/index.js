@@ -12,10 +12,14 @@ yargs(hideBin(process.argv))
     .command('init', "Initialize a new repository", {}, initRepo)
     .command('add <file>',"Add a file to the repository", 
         (yargs) => {yargs.positional("file", {describe: "File to add to staging area", type: "string"})},
-        addRepo)
+        (argv) => {
+            addRepo(argv.file);
+        })
     .command('commit <message>', "Commit to the repository", 
         (yargs) => {yargs.positional("message", {describe: "Commit message", type: "string"})},
-        commitRepo)
+        (argv) => {
+            commitRepo(argv.message);
+        })
     .command('push', "Push commits to S3", {}, pushRepo)
     .command('pull', "Pull commits from S3", {}, pullRepo)
     .command('revert <commitID>', "Revert to a specific commit", 
